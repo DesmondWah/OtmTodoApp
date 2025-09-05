@@ -10,7 +10,7 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <!-- ===== Reproducibility + Java level ===== -->
+  <!-- Added by Desmond Wah: lock encoding + compiler level for reproducible builds -->
   <properties>
     <!-- Deterministic timestamps inside built jars -->
     <project.build.outputTimestamp>2025-01-01T00:00:00Z</project.build.outputTimestamp>
@@ -66,6 +66,8 @@
       <!-- JavaFX run plugin (kept exactly as project uses) -->
       <plugin>
         <groupId>org.openjfx</groupId>
+        
+        <!-- Configured by Desmond Wah: JavaFX run support (not required for headless build) -->
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.3</version>
         <configuration>
@@ -73,7 +75,7 @@
         </configuration>
       </plugin>
 
-      <!-- Coverage (kept but pinned as in repo) -->
+      <!-- Added by Desmond Wah: enable test coverage reports; exclude UI package from coverage -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -93,14 +95,14 @@
         </executions>
       </plugin>
 
-      <!-- Javadoc (pinned) -->
+      <!-- Added by Desmond Wah: generate API documentation under target/site/apidocs -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.10.3</version>
       </plugin>
 
-      <!-- Checkstyle + JXR (pinned) -->
+      <!-- Added by Desmond Wah: enforce code style using checkstyle.xml; report in target/site -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -109,13 +111,15 @@
           <configLocation>checkstyle.xml</configLocation>
         </configuration>
       </plugin>
+
+      <!-- Added by Desmond Wah: generate cross-referenced sources in target/site -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
         <version>2.5</version>
       </plugin>
 
-      <!-- Shade fat-jar (kept as-is, but now reproducible via jar plugin below) -->
+      <!-- Added by Desmond Wah: build runnable fat JAR with dependencies -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
