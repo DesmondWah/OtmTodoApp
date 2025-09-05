@@ -12,6 +12,7 @@ public class FileTodoDao implements TodoDao {
     public List<Todo> todos;
     private String file;
 
+    //Hi, I am  Loo Xu to practice git commands for SCC assignment 2 here
     public FileTodoDao(String file, UserDao users) throws Exception {
         todos = new ArrayList<>();
         this.file = file;
