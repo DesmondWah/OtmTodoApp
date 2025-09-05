@@ -1,3 +1,4 @@
+# Added by Desmond Wah
 # build.ps1 - portable one-command build
 $ErrorActionPreference = "Stop"
 
