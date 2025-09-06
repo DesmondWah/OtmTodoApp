@@ -110,7 +110,8 @@ public class TodoUi extends Application {
         
         loginPane.getChildren().addAll(loginMessage, inputPane, loginButton, createButton);       
         
-        loginScene = new Scene(loginPane, 300, 250);    
+        loginScene = new Scene(loginPane, 300, 250);
+        loginScene.setFill(Color.LIGHTBLUE);    
    
         // new createNewUserScene
         
@@ -157,12 +158,14 @@ public class TodoUi extends Application {
         newUserPane.getChildren().addAll(userCreationMessage, newUsernamePane, newNamePane, createNewUserButton); 
        
         newUserScene = new Scene(newUserPane, 300, 250);
+        newUserScene.setFill(Color.LIGHTGREEN);
         
         // main scene
         
         ScrollPane todoScollbar = new ScrollPane();       
         BorderPane mainPane = new BorderPane(todoScollbar);
         todoScene = new Scene(mainPane, 300, 250);
+        todoScene.setFill(Color.LIGHTCYAN);
                 
         HBox menuPane = new HBox(10);    
         Region menuSpacer = new Region();
