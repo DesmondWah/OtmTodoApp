@@ -34,11 +34,20 @@ jobs:
       run: mvn test
 
     - name: Package application
-      run: mvn package
+      run: mvn package -DskipTests
 
+    # Step to upload TEST REPORTS
     - name: Upload test reports
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-reports
         path: target/surefire-reports/
+
+    # NEW STEP: Upload JAR artifact (FIXED!)
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: application-package
+        path: target/*.jar
