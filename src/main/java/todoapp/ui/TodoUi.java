@@ -81,6 +81,7 @@ public class TodoUi extends Application {
         VBox loginPane = new VBox(10);
         HBox inputPane = new HBox(10);
         loginPane.setPadding(new Insets(10));
+        loginPane.setStyle("-fx-background-color: lightblue;");
         Label loginLabel = new Label("username");
         TextField usernameInput = new TextField();
         
@@ -116,6 +117,7 @@ public class TodoUi extends Application {
         // new createNewUserScene
         
         VBox newUserPane = new VBox(10);
+        newUserPane.setStyle("-fx-background-color: lightgreen;");
         
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));
@@ -164,6 +166,7 @@ public class TodoUi extends Application {
         
         ScrollPane todoScollbar = new ScrollPane();       
         BorderPane mainPane = new BorderPane(todoScollbar);
+        mainPane.setStyle("-fx-background-color: lightcyan;");
         todoScene = new Scene(mainPane, 300, 250);
         todoScene.setFill(Color.LIGHTCYAN);
                 
