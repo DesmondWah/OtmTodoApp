@@ -52,6 +52,7 @@ public class TodoUi extends Application {
         Label label  = new Label(todo.getContent());
         label.setMinHeight(28);
         Button button = new Button("done");
+        button.setStyle("-fx-background-color: #9e9e9e; -fx-text-fill: white;"); // Grey background, white text
         button.setOnAction(e->{
             todoService.markDone(todo.getId());
             redrawTodolist();
@@ -88,7 +89,9 @@ public class TodoUi extends Application {
         Label loginMessage = new Label();
         
         Button loginButton = new Button("login");
+        loginButton.setStyle("-fx-base: #2196F3; -fx-text-fill: white;"); // Blue background, white text
         Button createButton = new Button("create new user");
+        createButton.setStyle("-fx-base: #FF9800;"); // Orange background
         loginButton.setOnAction(e->{
             String username = usernameInput.getText();
             menuLabel.setText(username + " logged in...");
@@ -133,6 +136,7 @@ public class TodoUi extends Application {
         Label userCreationMessage = new Label();
         
         Button createNewUserButton = new Button("create");
+        createNewUserButton.setStyle("-fx-background-color: #FF9800; -fx-text-fill: white;"); // Orange background, white text
         createNewUserButton.setPadding(new Insets(10));
 
         createNewUserButton.setOnAction(e->{
@@ -167,7 +171,8 @@ public class TodoUi extends Application {
         HBox menuPane = new HBox(10);    
         Region menuSpacer = new Region();
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
-        Button logoutButton = new Button("logout");      
+        Button logoutButton = new Button("logout"); 
+        logoutButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;"); // Red background, white text     
         menuPane.getChildren().addAll(menuLabel, menuSpacer, logoutButton);
         logoutButton.setOnAction(e->{
             todoService.logout();
@@ -176,6 +181,7 @@ public class TodoUi extends Application {
         
         HBox createForm = new HBox(10);    
         Button createTodo = new Button("create");
+        createTodo.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;"); // Green background, white text
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         TextField newTodoInput = new TextField();
