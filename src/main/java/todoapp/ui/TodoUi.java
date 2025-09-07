@@ -81,6 +81,7 @@ public class TodoUi extends Application {
         VBox loginPane = new VBox(10);
         HBox inputPane = new HBox(10);
         loginPane.setPadding(new Insets(10));
+        loginPane.setStyle("-fx-background-color: lightblue;");
         Label loginLabel = new Label("username");
         TextField usernameInput = new TextField();
         
@@ -112,11 +113,13 @@ public class TodoUi extends Application {
         
         loginPane.getChildren().addAll(loginMessage, inputPane, loginButton, createButton);       
         
-        loginScene = new Scene(loginPane, 300, 250);    
+        loginScene = new Scene(loginPane, 300, 250);
+        loginScene.setFill(Color.LIGHTBLUE);    
    
         // new createNewUserScene
         
         VBox newUserPane = new VBox(10);
+        newUserPane.setStyle("-fx-background-color: lightgreen;");
         
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));
@@ -159,12 +162,15 @@ public class TodoUi extends Application {
         newUserPane.getChildren().addAll(userCreationMessage, newUsernamePane, newNamePane, createNewUserButton); 
        
         newUserScene = new Scene(newUserPane, 300, 250);
+        newUserScene.setFill(Color.LIGHTGREEN);
         
         // main scene
         
         ScrollPane todoScollbar = new ScrollPane();       
         BorderPane mainPane = new BorderPane(todoScollbar);
+        mainPane.setStyle("-fx-background-color: lightcyan;");
         todoScene = new Scene(mainPane, 300, 250);
+        todoScene.setFill(Color.LIGHTCYAN);
                 
         HBox menuPane = new HBox(10);    
         Region menuSpacer = new Region();
