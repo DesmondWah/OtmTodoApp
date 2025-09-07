@@ -22,6 +22,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import todoapp.dao.FileTodoDao;
 import todoapp.dao.FileUserDao;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
 
 public class TodoUi extends Application {
     private TodoService todoService;
@@ -83,15 +86,15 @@ public class TodoUi extends Application {
         loginPane.setPadding(new Insets(10));
         loginPane.setStyle("-fx-background-color: lightblue;");
         Label loginLabel = new Label("username");
+        loginLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 16));
+
         TextField usernameInput = new TextField();
         
         inputPane.getChildren().addAll(loginLabel, usernameInput);
         Label loginMessage = new Label();
         
         Button loginButton = new Button("login");
-        loginButton.setStyle("-fx-base: #2196F3; -fx-text-fill: white;"); // Blue background, white text
         Button createButton = new Button("create new user");
-        createButton.setStyle("-fx-base: #FF9800;"); // Orange background
         loginButton.setOnAction(e->{
             String username = usernameInput.getText();
             menuLabel.setText(username + " logged in...");
@@ -125,6 +128,7 @@ public class TodoUi extends Application {
         newUsernamePane.setPadding(new Insets(10));
         TextField newUsernameInput = new TextField(); 
         Label newUsernameLabel = new Label("username");
+        newUsernameLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         newUsernameLabel.setPrefWidth(100);
         newUsernamePane.getChildren().addAll(newUsernameLabel, newUsernameInput);
      
@@ -132,12 +136,15 @@ public class TodoUi extends Application {
         newNamePane.setPadding(new Insets(10));
         TextField newNameInput = new TextField();
         Label newNameLabel = new Label("name");
+        newNameLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         newNameLabel.setPrefWidth(100);
         newNamePane.getChildren().addAll(newNameLabel, newNameInput);        
         
         Label userCreationMessage = new Label();
+        userCreationMessage.setFont(Font.font("Segoe UI", FontWeight.BOLD, 12));
         
         Button createNewUserButton = new Button("create");
+        createNewUserButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         createNewUserButton.setPadding(new Insets(10));
 
         createNewUserButton.setOnAction(e->{
@@ -165,7 +172,8 @@ public class TodoUi extends Application {
         newUserScene.setFill(Color.LIGHTGREEN);
         
         // main scene
-        
+        menuLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+
         ScrollPane todoScollbar = new ScrollPane();       
         BorderPane mainPane = new BorderPane(todoScollbar);
         mainPane.setStyle("-fx-background-color: lightcyan;");
@@ -175,7 +183,8 @@ public class TodoUi extends Application {
         HBox menuPane = new HBox(10);    
         Region menuSpacer = new Region();
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
-        Button logoutButton = new Button("logout");      
+        Button logoutButton = new Button("logout");
+        logoutButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));      
         menuPane.getChildren().addAll(menuLabel, menuSpacer, logoutButton);
         logoutButton.setOnAction(e->{
             todoService.logout();
@@ -184,6 +193,7 @@ public class TodoUi extends Application {
         
         HBox createForm = new HBox(10);    
         Button createTodo = new Button("create");
+        createTodo.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         TextField newTodoInput = new TextField();
