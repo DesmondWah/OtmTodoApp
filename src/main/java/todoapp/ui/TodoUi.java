@@ -53,6 +53,9 @@ public class TodoUi extends Application {
         Label label  = new Label(todo.getContent());
         label.setMinHeight(28);
         Button button = new Button("done");
+
+        // friend's color + existing action
+        button.setStyle("-fx-background-color: #9e9e9e; -fx-text-fill: white;"); // Grey background, white text
         button.setOnAction(e -> {
             todoService.markDone(todo.getId());
             redrawTodolist();
@@ -87,7 +90,7 @@ public class TodoUi extends Application {
         loginLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 16));
 
         TextField usernameInput = new TextField();
-
+        // (kept) highlight the input field
         usernameInput.setStyle("-fx-control-inner-background: yellow;");
 
         inputPane.getChildren().addAll(loginLabel, usernameInput);
@@ -95,12 +98,12 @@ public class TodoUi extends Application {
         Label loginMessage = new Label();
 
         Button loginButton = new Button("login");
-        // friend's button color + your font
+        // friend's color + your font
         loginButton.setStyle("-fx-base: #2196F3; -fx-text-fill: white;");
         loginButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
 
         Button createButton = new Button("create new user");
-        // friend's button color + your font
+        // friend's color + your font
         createButton.setStyle("-fx-base: #FF9800;");
         createButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
 
@@ -151,6 +154,8 @@ public class TodoUi extends Application {
         userCreationMessage.setFont(Font.font("Segoe UI", FontWeight.BOLD, 12));
 
         Button createNewUserButton = new Button("create");
+        // friend's color + your font
+        createNewUserButton.setStyle("-fx-background-color: #FF9800; -fx-text-fill: white;");
         createNewUserButton.setPadding(new Insets(10));
         createNewUserButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
 
@@ -186,8 +191,11 @@ public class TodoUi extends Application {
         HBox menuPane = new HBox(10);
         Region menuSpacer = new Region();
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
+
         Button logoutButton = new Button("logout");
+        // keep both: your fonts + friend's color
         menuLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+        logoutButton.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;");
         logoutButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         menuPane.getChildren().addAll(menuLabel, menuSpacer, logoutButton);
 
@@ -198,7 +206,10 @@ public class TodoUi extends Application {
 
         HBox createForm = new HBox(10);
         Button createTodo = new Button("create");
+        // keep both: friend's color + your font
+        createTodo.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
         createTodo.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         TextField newTodoInput = new TextField();
