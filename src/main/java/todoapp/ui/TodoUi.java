@@ -83,6 +83,7 @@ public class TodoUi extends Application {
         loginPane.setPadding(new Insets(10));
         Label loginLabel = new Label("username");
         TextField usernameInput = new TextField();
+        usernameInput.setStyle("-fx-control-inner-background: yellow;");
         
         inputPane.getChildren().addAll(loginLabel, usernameInput);
         Label loginMessage = new Label();
