@@ -3,8 +3,7 @@ package todoapp.ui;
 import java.io.FileInputStream;
 import java.util.List;
 import java.util.Properties;
-import todoapp.domain.TodoService;
-import todoapp.domain.Todo;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -19,11 +18,14 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import todoapp.dao.FileTodoDao;
-import todoapp.dao.FileUserDao;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+
+import todoapp.dao.FileTodoDao;
+import todoapp.dao.FileUserDao;
+import todoapp.domain.Todo;
+import todoapp.domain.TodoService;
 
 public class TodoUi extends Application {
     private TodoService todoService;
@@ -50,12 +52,12 @@ public class TodoUi extends Application {
 
     public Node createTodoNode(Todo todo) {
         HBox box = new HBox(10);
-        Label label  = new Label(todo.getContent());
+        Label label = new Label(todo.getContent());
         label.setMinHeight(28);
-        Button button = new Button("done");
 
+        Button button = new Button("done");
         // friend's color + existing action
-        button.setStyle("-fx-background-color: #9e9e9e; -fx-text-fill: white;"); // Grey background, white text
+        button.setStyle("-fx-background-color: #9e9e9e; -fx-text-fill: white;");
         button.setOnAction(e -> {
             todoService.markDone(todo.getId());
             redrawTodolist();
@@ -71,11 +73,8 @@ public class TodoUi extends Application {
 
     public void redrawTodolist() {
         todoNodes.getChildren().clear();
-
         List<Todo> undoneTodos = todoService.getUndone();
-        undoneTodos.forEach(todo -> {
-            todoNodes.getChildren().add(createTodoNode(todo));
-        });
+        undoneTodos.forEach(todo -> todoNodes.getChildren().add(createTodoNode(todo)));
     }
 
     @Override
@@ -84,13 +83,13 @@ public class TodoUi extends Application {
         VBox loginPane = new VBox(10);
         HBox inputPane = new HBox(10);
         loginPane.setPadding(new Insets(10));
-        loginPane.setStyle("-fx-background-color: lightblue;");
+        loginPane.setStyle("-fx-background-color: lightblue;"); // <— friend’s change
 
         Label loginLabel = new Label("username");
         loginLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 16));
 
         TextField usernameInput = new TextField();
-        // (kept) highlight the input field
+        // highlight the input field
         usernameInput.setStyle("-fx-control-inner-background: yellow;");
 
         inputPane.getChildren().addAll(loginLabel, usernameInput);
@@ -116,7 +115,7 @@ public class TodoUi extends Application {
                 primaryStage.setScene(todoScene);
                 usernameInput.setText("");
             } else {
-                loginMessage.setText("use does not exist");
+                loginMessage.setText("user does not exist");
                 loginMessage.setTextFill(Color.RED);
             }
         });
@@ -132,7 +131,7 @@ public class TodoUi extends Application {
 
         // -------------------- new user scene --------------------
         VBox newUserPane = new VBox(10);
-        newUserPane.setStyle("-fx-background-color: lightgreen;");
+        newUserPane.setStyle("-fx-background-color: lightgreen;"); // <— friend’s change
 
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));
@@ -163,7 +162,7 @@ public class TodoUi extends Application {
             String username = newUsernameInput.getText();
             String name = newNameInput.getText();
 
-            if (username.length() == 2 || name.length() < 2) {
+            if (username.length() <= 2 || name.length() < 2) {
                 userCreationMessage.setText("username or name too short");
                 userCreationMessage.setTextFill(Color.RED);
             } else if (todoService.createUser(username, name)) {
@@ -184,7 +183,7 @@ public class TodoUi extends Application {
         // -------------------- main scene --------------------
         ScrollPane todoScollbar = new ScrollPane();
         BorderPane mainPane = new BorderPane(todoScollbar);
-        mainPane.setStyle("-fx-background-color: lightcyan;");
+        mainPane.setStyle("-fx-background-color: lightcyan;"); // <— friend’s change
         todoScene = new Scene(mainPane, 300, 250);
         todoScene.setFill(Color.LIGHTCYAN);
 
@@ -206,7 +205,7 @@ public class TodoUi extends Application {
 
         HBox createForm = new HBox(10);
         Button createTodo = new Button("create");
-        // keep both: friend's color + your font
+        // friend's color + your font
         createTodo.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
         createTodo.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
 
