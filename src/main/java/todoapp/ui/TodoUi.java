@@ -87,6 +87,9 @@ public class TodoUi extends Application {
         loginLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 16));
 
         TextField usernameInput = new TextField();
+
+        usernameInput.setStyle("-fx-control-inner-background: yellow;");
+
         inputPane.getChildren().addAll(loginLabel, usernameInput);
 
         Label loginMessage = new Label();
