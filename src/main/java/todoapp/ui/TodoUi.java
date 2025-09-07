@@ -25,218 +25,217 @@ import todoapp.dao.FileUserDao;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-
 public class TodoUi extends Application {
     private TodoService todoService;
-    
+
     private Scene todoScene;
     private Scene newUserScene;
     private Scene loginScene;
-    
+
     private VBox todoNodes;
     private Label menuLabel = new Label();
-    
+
     @Override
     public void init() throws Exception {
         Properties properties = new Properties();
-
         properties.load(new FileInputStream("config.properties"));
-        
+
         String userFile = properties.getProperty("userFile");
         String todoFile = properties.getProperty("todoFile");
-            
+
         FileUserDao userDao = new FileUserDao(userFile);
         FileTodoDao todoDao = new FileTodoDao(todoFile, userDao);
         todoService = new TodoService(todoDao, userDao);
     }
-    
+
     public Node createTodoNode(Todo todo) {
         HBox box = new HBox(10);
         Label label  = new Label(todo.getContent());
         label.setMinHeight(28);
         Button button = new Button("done");
-        button.setOnAction(e->{
+        button.setOnAction(e -> {
             todoService.markDone(todo.getId());
             redrawTodolist();
         });
-                
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        box.setPadding(new Insets(0,5,0,5));
-        
+        box.setPadding(new Insets(0, 5, 0, 5));
+
         box.getChildren().addAll(label, spacer, button);
         return box;
     }
-    
+
     public void redrawTodolist() {
-        todoNodes.getChildren().clear();     
+        todoNodes.getChildren().clear();
 
         List<Todo> undoneTodos = todoService.getUndone();
-        undoneTodos.forEach(todo->{
+        undoneTodos.forEach(todo -> {
             todoNodes.getChildren().add(createTodoNode(todo));
-        });     
+        });
     }
-    
+
     @Override
-    public void start(Stage primaryStage) {               
-        // login scene
-        
+    public void start(Stage primaryStage) {
+        // -------------------- login scene --------------------
         VBox loginPane = new VBox(10);
         HBox inputPane = new HBox(10);
         loginPane.setPadding(new Insets(10));
         loginPane.setStyle("-fx-background-color: lightblue;");
+
         Label loginLabel = new Label("username");
         loginLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 16));
 
         TextField usernameInput = new TextField();
-        
         inputPane.getChildren().addAll(loginLabel, usernameInput);
+
         Label loginMessage = new Label();
-        
+
         Button loginButton = new Button("login");
+        // friend's button color + your font
+        loginButton.setStyle("-fx-base: #2196F3; -fx-text-fill: white;");
+        loginButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+
         Button createButton = new Button("create new user");
-        loginButton.setOnAction(e->{
+        // friend's button color + your font
+        createButton.setStyle("-fx-base: #FF9800;");
+        createButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+
+        loginButton.setOnAction(e -> {
             String username = usernameInput.getText();
             menuLabel.setText(username + " logged in...");
-            if ( todoService.login(username) ){
+            if (todoService.login(username)) {
                 loginMessage.setText("");
                 redrawTodolist();
-                primaryStage.setScene(todoScene);  
+                primaryStage.setScene(todoScene);
                 usernameInput.setText("");
             } else {
                 loginMessage.setText("use does not exist");
                 loginMessage.setTextFill(Color.RED);
-            }      
-        });  
-        
-        createButton.setOnAction(e->{
+            }
+        });
+
+        createButton.setOnAction(e -> {
             usernameInput.setText("");
-            primaryStage.setScene(newUserScene);   
-        });  
-        
-        loginPane.getChildren().addAll(loginMessage, inputPane, loginButton, createButton);       
-        
+            primaryStage.setScene(newUserScene);
+        });
+
+        loginPane.getChildren().addAll(loginMessage, inputPane, loginButton, createButton);
         loginScene = new Scene(loginPane, 300, 250);
-        loginScene.setFill(Color.LIGHTBLUE);    
-   
-        // new createNewUserScene
-        
+        loginScene.setFill(Color.LIGHTBLUE);
+
+        // -------------------- new user scene --------------------
         VBox newUserPane = new VBox(10);
         newUserPane.setStyle("-fx-background-color: lightgreen;");
-        
+
         HBox newUsernamePane = new HBox(10);
         newUsernamePane.setPadding(new Insets(10));
-        TextField newUsernameInput = new TextField(); 
+        TextField newUsernameInput = new TextField();
         Label newUsernameLabel = new Label("username");
-        newUsernameLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         newUsernameLabel.setPrefWidth(100);
+        newUsernameLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         newUsernamePane.getChildren().addAll(newUsernameLabel, newUsernameInput);
-     
+
         HBox newNamePane = new HBox(10);
         newNamePane.setPadding(new Insets(10));
         TextField newNameInput = new TextField();
         Label newNameLabel = new Label("name");
-        newNameLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         newNameLabel.setPrefWidth(100);
-        newNamePane.getChildren().addAll(newNameLabel, newNameInput);        
-        
+        newNameLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+        newNamePane.getChildren().addAll(newNameLabel, newNameInput);
+
         Label userCreationMessage = new Label();
         userCreationMessage.setFont(Font.font("Segoe UI", FontWeight.BOLD, 12));
-        
-        Button createNewUserButton = new Button("create");
-        createNewUserButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
-        createNewUserButton.setPadding(new Insets(10));
 
-        createNewUserButton.setOnAction(e->{
+        Button createNewUserButton = new Button("create");
+        createNewUserButton.setPadding(new Insets(10));
+        createNewUserButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+
+        createNewUserButton.setOnAction(e -> {
             String username = newUsernameInput.getText();
             String name = newNameInput.getText();
-   
-            if ( username.length()==2 || name.length()<2 ) {
+
+            if (username.length() == 2 || name.length() < 2) {
                 userCreationMessage.setText("username or name too short");
-                userCreationMessage.setTextFill(Color.RED);              
-            } else if ( todoService.createUser(username, name) ){
-                userCreationMessage.setText("");                
+                userCreationMessage.setTextFill(Color.RED);
+            } else if (todoService.createUser(username, name)) {
+                userCreationMessage.setText("");
                 loginMessage.setText("new user created");
                 loginMessage.setTextFill(Color.GREEN);
-                primaryStage.setScene(loginScene);      
+                primaryStage.setScene(loginScene);
             } else {
                 userCreationMessage.setText("username has to be unique");
-                userCreationMessage.setTextFill(Color.RED);        
+                userCreationMessage.setTextFill(Color.RED);
             }
- 
-        });  
-        
-        newUserPane.getChildren().addAll(userCreationMessage, newUsernamePane, newNamePane, createNewUserButton); 
-       
+        });
+
+        newUserPane.getChildren().addAll(userCreationMessage, newUsernamePane, newNamePane, createNewUserButton);
         newUserScene = new Scene(newUserPane, 300, 250);
         newUserScene.setFill(Color.LIGHTGREEN);
-        
-        // main scene
-        menuLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
 
-        ScrollPane todoScollbar = new ScrollPane();       
+        // -------------------- main scene --------------------
+        ScrollPane todoScollbar = new ScrollPane();
         BorderPane mainPane = new BorderPane(todoScollbar);
         mainPane.setStyle("-fx-background-color: lightcyan;");
         todoScene = new Scene(mainPane, 300, 250);
         todoScene.setFill(Color.LIGHTCYAN);
-                
-        HBox menuPane = new HBox(10);    
+
+        HBox menuPane = new HBox(10);
         Region menuSpacer = new Region();
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
         Button logoutButton = new Button("logout");
-        logoutButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));      
+        menuLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
+        logoutButton.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         menuPane.getChildren().addAll(menuLabel, menuSpacer, logoutButton);
-        logoutButton.setOnAction(e->{
+
+        logoutButton.setOnAction(e -> {
             todoService.logout();
             primaryStage.setScene(loginScene);
-        });        
-        
-        HBox createForm = new HBox(10);    
+        });
+
+        HBox createForm = new HBox(10);
         Button createTodo = new Button("create");
         createTodo.setFont(Font.font("Segoe UI", FontWeight.BOLD, 14));
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         TextField newTodoInput = new TextField();
         createForm.getChildren().addAll(newTodoInput, spacer, createTodo);
-        
+
         todoNodes = new VBox(10);
         todoNodes.setMaxWidth(280);
         todoNodes.setMinWidth(280);
         redrawTodolist();
-        
+
         todoScollbar.setContent(todoNodes);
         mainPane.setBottom(createForm);
         mainPane.setTop(menuPane);
-        
-        createTodo.setOnAction(e->{
+
+        createTodo.setOnAction(e -> {
             todoService.createTodo(newTodoInput.getText());
-            newTodoInput.setText("");       
+            newTodoInput.setText("");
             redrawTodolist();
         });
-        
-        // seutp primary stage
-        
+
+        // setup primary stage
         primaryStage.setTitle("Todos");
         primaryStage.setScene(loginScene);
         primaryStage.show();
-        primaryStage.setOnCloseRequest(e->{
+        primaryStage.setOnCloseRequest(e -> {
             System.out.println("closing");
             System.out.println(todoService.getLoggedUser());
-            if (todoService.getLoggedUser()!=null) {
-                e.consume();   
+            if (todoService.getLoggedUser() != null) {
+                e.consume();
             }
-            
         });
     }
 
     @Override
     public void stop() {
-      // tee lopetustoimenpiteet täällä
-      System.out.println("sovellus sulkeutuu");
-    }    
-    
+        // tee lopetustoimenpiteet täällä
+        System.out.println("sovellus sulkeutuu");
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
-    
 }
