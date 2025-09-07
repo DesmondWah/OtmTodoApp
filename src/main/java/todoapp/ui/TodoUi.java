@@ -88,7 +88,9 @@ public class TodoUi extends Application {
         Label loginMessage = new Label();
         
         Button loginButton = new Button("login");
+        loginButton.setStyle("-fx-base: #2196F3; -fx-text-fill: white;"); // Blue background, white text
         Button createButton = new Button("create new user");
+        createButton.setStyle("-fx-base: #FF9800;"); // Orange background
         loginButton.setOnAction(e->{
             String username = usernameInput.getText();
             menuLabel.setText(username + " logged in...");
