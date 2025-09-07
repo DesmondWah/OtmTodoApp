@@ -1,11 +1,4 @@
-target
-todos.txt 
+target/
+*.log
+todos.txt
 users.txt
-.classpath
-.project
-.settings/
-/nbproject/
-target
-.vscode/
-nbactions.xml
-todoapp.jar
